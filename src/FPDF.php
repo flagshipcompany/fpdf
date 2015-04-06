@@ -9,7 +9,7 @@
 *******************************************************************************/
 
 // Namespace definition add by itbz 2012-05-13 and modified to all-caps by flagshipcompany  ON 2015-04-06
-namespace FPDF;
+namespace Fpdf;
 
 define('FPDF_VERSION', '1.7');
 
