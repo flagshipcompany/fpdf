@@ -18,3 +18,12 @@ Add this to to your composer.json file:
 then, require it:
 
 ```composer require flagshipcompany/fpdf @dev```
+
+
+### Usage
+
+```
+	$laserPdf = new FcsFpdf('P', 'in', [11, 8.5]);
+    $laserPdf->SetMargins(1, 1);
+    // ....
+```
