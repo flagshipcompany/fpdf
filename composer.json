@@ -10,7 +10,7 @@
     "autoload": {
         "psr-4": {
             "Fpdf\\": "fpdf/src/",
-            "Fpdi\\": "fpdi/"
+            "Fpdi\\": "fpdi/src"
         }
     }
 }

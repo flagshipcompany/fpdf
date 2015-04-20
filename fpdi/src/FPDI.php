@@ -16,14 +16,14 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-namespace fpdi;
+namespace Fpdi;
 
 require_once 'fpdf_tpl.php';
 
 /**
  * Class FPDI.
  */
-class fpdi extends FPDF_TPL
+class FPDI extends FPDF_TPL
 {
     /**
      * FPDI version.
