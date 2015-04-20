@@ -25,31 +25,34 @@
  * This way it is possible to use FPDI for both FPDF and TCPDF with one FPDI version.
  */
 
+namespace fpdi;
+
+use Fpdf\FPDF;
+
 if (!class_exists('TCPDF', false)) {
     /**
-     * Class fpdi_bridge
+     * Class fpdi_bridge.
      */
     class fpdi_bridge extends FPDF
     {
         // empty body
     }
-
 } else {
 
     /**
-     * Class fpdi_bridge
+     * Class fpdi_bridge.
      */
     class fpdi_bridge extends TCPDF
     {
         /**
-         * Array of Tpl-Data
+         * Array of Tpl-Data.
          *
          * @var array
          */
         protected $_tpls = array();
 
         /**
-         * Name-prefix of Templates used in Resources-Dictionary
+         * Name-prefix of Templates used in Resources-Dictionary.
          *
          * @var string A String defining the Prefix used as Template-Object-Names. Have to begin with an /
          */
@@ -102,7 +105,7 @@ if (!class_exists('TCPDF', false)) {
                         $value[2][1] = $this->_encrypt_data($this->_currentObjId, $value[2][1]);
                         $value[1][1]['/Length'] = array(
                             pdf_parser::TYPE_NUMERIC,
-                            strlen($value[2][1])
+                            strlen($value[2][1]),
                         );
                     }
                     break;
@@ -120,9 +123,10 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-         * Un-escapes a PDF string
+         * Un-escapes a PDF string.
          *
          * @param string $s
+         *
          * @return string
          */
         protected function _unescape($s)
@@ -154,8 +158,9 @@ if (!class_exists('TCPDF', false)) {
                             $out .= chr(0x0A);
                             break;
                         case "\r":
-                            if ($count != $n-1 && $s[$count+1] == "\n")
+                            if ($count != $n-1 && $s[$count+1] == "\n") {
                                 $count++;
+                            }
                             break;
                         case "\n":
                             break;
@@ -163,7 +168,7 @@ if (!class_exists('TCPDF', false)) {
                             // Octal-Values
                             if (ord($s[$count]) >= ord('0') &&
                                 ord($s[$count]) <= ord('9')) {
-                                $oct = ''. $s[$count];
+                                $oct = ''.$s[$count];
 
                                 if (ord($s[$count+1]) >= ord('0') &&
                                     ord($s[$count+1]) <= ord('9')) {
@@ -182,13 +187,15 @@ if (!class_exists('TCPDF', false)) {
                     }
                 }
             }
+
             return $out;
         }
 
         /**
-         * Hexadecimal to string
+         * Hexadecimal to string.
          *
          * @param string $data
+         *
          * @return string
          */
         public function hex2str($data)
@@ -202,9 +209,10 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-         * String to hexadecimal
+         * String to hexadecimal.
          *
          * @param string $str
+         *
          * @return string
          */
         public function str2hex($str)
