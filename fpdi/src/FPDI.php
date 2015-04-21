@@ -16,6 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+//added namespace by flagshipcompany on 2015-04-20
 namespace Fpdi;
 
 require_once 'fpdf_tpl.php';

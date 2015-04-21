@@ -25,8 +25,10 @@
  * This way it is possible to use FPDI for both FPDF and TCPDF with one FPDI version.
  */
 
+//added namespace by flagshipcompany on 2015-04-21
 namespace Fpdi;
 
+//modified to comply with repository by flagshipcompany on 2015-04-21
 use Fpdf\FPDF;
 
 if (!class_exists('TCPDF', false)) {

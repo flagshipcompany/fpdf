@@ -16,6 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+//added namespace by flagshipcompany on 2015-04-20
 namespace Fpdi;
 
 require_once 'pdf_parser.php';
@@ -342,7 +343,9 @@ class fpdi_pdf_parser extends pdf_parser
      * @param array $pages  /Pages dictionary
      * @param array $result The result array
      *
-     * @throws Exception
+     * modified exception to \RuntimeException by flagshipcompany on 2015-04-21
+     *
+     * @throws \RuntimeException
      */
     protected function _readPages(&$pages, &$result)
     {
@@ -350,7 +353,8 @@ class fpdi_pdf_parser extends pdf_parser
         $_kids = $this->resolveObject($pages[1][1]['/Kids']);
 
         if (!is_array($_kids)) {
-            throw new Exception('Cannot find /Kids in current /Page-Dictionary');
+            // modified exception to \RuntimeException by flagshipcompany on 2015-04-21
+            throw new \RuntimeException('Cannot find /Kids in current /Page-Dictionary');
         }
 
         if ($_kids[0] === self::TYPE_OBJECT) {
