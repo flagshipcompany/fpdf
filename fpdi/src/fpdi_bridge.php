@@ -29,13 +29,13 @@
 namespace Fpdi;
 
 //modified to comply with repository by flagshipcompany on 2015-04-21
-use Fpdf\FPDF;
+use Fpdf\FcsFpdf;
 
 if (!class_exists('TCPDF', false)) {
     /**
      * Class fpdi_bridge.
      */
-    class fpdi_bridge extends FPDF
+    class fpdi_bridge extends FcsFpdf
     {
         // empty body
     }
