@@ -193,7 +193,7 @@ class pdf_parser
         $this->_f = @fopen($this->filename, 'rb');
 
         if (!$this->_f) {
-            throw new InvalidArgumentException(sprintf('Cannot open %s !', $filename));
+            throw new \InvalidArgumentException(sprintf('Cannot open %s !', $filename));
         }
 
         $this->getPdfVersion();
