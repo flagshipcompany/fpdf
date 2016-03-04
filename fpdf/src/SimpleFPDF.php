@@ -8,7 +8,7 @@
 
 namespace Fpdf;
 
-class FcsFpdf extends FPDF
+class SimpleFPDF extends FPDF
 {
     public $angle = 0;
 
@@ -57,5 +57,10 @@ class FcsFpdf extends FPDF
         $this->Rotate($angle, $x, $y);
         $this->Image($file, $x, $y, $w, $h);
         $this->Rotate(0);
+    }
+
+    public function Cell($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = false, $link = '')
+    {
+        parent::Cell($w, $h, iconv('UTF-8', 'ISO-8859-1', $txt), $border, $ln, $align, $fill, $link);
     }
 }
