@@ -2,7 +2,7 @@
 
 namespace HyperPDF\Painting;
 
-use Fpdf\SimpleFPDF;
+use HyperPDF\SimpleFPDF;
 use HyperPDF\Nodes\LayoutNode;
 
 class LayoutBlock
