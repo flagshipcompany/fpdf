@@ -35,6 +35,11 @@ class LayoutNode
         return;
     }
 
+    public function setProperty($prop, $value)
+    {
+        $this->properties[$prop] = $value;
+    }
+
     public function getProperties()
     {
         return $this->properties;

@@ -21,6 +21,7 @@ class LayoutBlock
         $this->layout = $layout;
 
         $this->width = $this->pdf->w - $this->pdf->lMargin - $this->pdf->rMargin;
+
         $this->height = $this->layout->getProperty('height') ?: 5;
     }
 
@@ -52,8 +53,15 @@ class LayoutBlock
             $w = $w * $this->width;
         }
 
-        $x = $this->pdf->GetX();
-        $y = $this->pdf->GetY();
+        $absX = $this->layout->getProperty('x');
+        $absY = $this->layout->getProperty('y');
+
+        if ($absX && $absY) {
+            $this->pdf->SetXY($absX, $absY);
+        }
+
+        $x = $absX ?: $this->pdf->GetX();
+        $y = $absY ?: $this->pdf->GetY();
 
         $this->pdf->MultiCell(
             $w,                                         // width
