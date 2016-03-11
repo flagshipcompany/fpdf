@@ -6,7 +6,9 @@
 * Adds rotations to FPDF (Reference: http://www.fpdf.org/en/script/script2.php)*
 *******************************************************************************/
 
-namespace Fpdf;
+namespace HyperPDF;
+
+use Fpdf\FPDF;
 
 class SimpleFPDF extends FPDF
 {
