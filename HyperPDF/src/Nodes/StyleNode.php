@@ -5,7 +5,7 @@ namespace HyperPDF\Nodes;
 class StyleNode
 {
     protected $children;
-    protected $style = [];
+    protected $styles = [];
     protected $text = null;
     protected $name;
     protected $parent;
@@ -24,6 +24,7 @@ class StyleNode
         // second level to a leaf
         if (isset($rules['name'])) {
             $this->setAll($rules);
+            $this->setStyleCompletion();
 
             // node with name '*' is a directive node
             // it defines style for all of its siblings reguardless their different name
@@ -36,12 +37,13 @@ class StyleNode
                 // by best practice we define directive node at the beginning of its kind
                 if (!isset($directiveNode) && $styleNode->isDiretiveNode()) {
                     $directiveNode = $styleNode;
+                    $directiveNode->setStyleCompletion();
                 }
 
                 // given such a directive node is defined
                 // we "patch" its siblings with directive node's style
                 if (isset($directiveNode)) {
-                    $styleNode->setStyle(array_merge($directiveNode->getStyle(), $styleNode->getStyle()));
+                    $styleNode->setStyles(array_merge($directiveNode->getStyles(), $styleNode->getStyles()));
                 }
 
                 // only non-directive node is consider as child node
@@ -104,9 +106,48 @@ class StyleNode
         return $this->parent;
     }
 
-    public function getStyle()
+    public function getStyle($name)
     {
-        return $this->style;
+        return isset($this->styles[$name]) ? $this->styles[$name] : null;
+    }
+
+    public function getStyles()
+    {
+        return $this->styles;
+    }
+
+    public function getAncestorsByStyle($name)
+    {
+        $ancestors = [];
+        $node = $this;
+
+        while ($parent = $node->getParent()) {
+            if ($style = $parent->getStyle($name)) {
+                $ancestors[] = $parent;
+            }
+
+            $node = $parent;
+        }
+
+        return $ancestors;
+    }
+
+    public function getInheritedStyle($name)
+    {
+        $prop = null;
+        $ancestors = $this->getAncestorsByStyle($name);
+
+        while ($ancestors) {
+            $node = array_pop($ancestors);
+
+            // nomally we should use the lately defined style to overwrite previous
+            // but position is not working like this way
+            if ($name != 'left' || $name != 'top' || $name != 'position' || $name != 'width' || $name != 'height') {
+                $prop = $node->getStyle($name);
+            }
+        }
+
+        return $prop;
     }
 
     public function getText()
@@ -126,9 +167,15 @@ class StyleNode
         $this->parent = $parent;
     }
 
-    public function setStyle(array $style = [])
+    public function setStyles(array $styles = [])
     {
-        $this->style = $style;
+        $this->styles = $styles;
+        $this->setStyleCompletion();
+    }
+
+    public function setStyle($name, $value)
+    {
+        $this->styles[$name] = $value;
     }
 
     public function setText($text)
@@ -139,7 +186,29 @@ class StyleNode
     protected function setAll($rule)
     {
         $this->name = isset($rule['name']) ? $rule['name'] : null;
-        $this->style = isset($rule['style']) ? $rule['style'] : [];
+
+        $this->styles = isset($rule['style']) ? $rule['style'] : [];
+
         $this->text = isset($rule['text']) ? $rule['text'] : null;
+    }
+
+    protected function setStyleCompletion()
+    {
+        // add defaults if style not specified
+        $this->styles = array_merge([
+            'position' => 'relative',
+            'left' => '0pt',
+            'top' => '0pt',
+            'width' => '100%',
+            'background-color' => '#ffffff',
+            'color' => '#000000',
+            'font-family' => 'Arial',
+            'font-size' => '10pt',
+            'font-style' => 'normal',
+            'font-weight' => 'normal',
+            'border' => 'none',
+            'text-align' => 'left',
+            'line-height' => '5pt',
+        ], $this->styles);
     }
 }

@@ -66,7 +66,7 @@ class LayoutNode
 
     protected function parseStyleToProp()
     {
-        $styles = $this->styleNode->getStyle();
+        $styles = $this->styleNode->getStyles();
 
         foreach ($styles as $keyword => $definition) {
             $this->matchStyle($keyword, $definition);
@@ -112,7 +112,7 @@ class LayoutNode
                 // inherit
                 $parent = $this->styleNode->getParent();
 
-                if ($parent && $style = $parent->getStyle() && isset($style['text-align'])) {
+                if ($parent && $style = $parent->getStyle('text-align')) {
                     $this->matchStyle('text-align', $style['text-align']);
                 }
 
@@ -208,7 +208,7 @@ class LayoutNode
 
                 $parent = $this->styleNode->getParent();
 
-                if ($parent && $style = $parent->getStyle() && isset($style['font-style'])) {
+                if ($parent && $style = $parent->getStyle('font-style')) {
                     $this->matchStyle('font-style', $style['font-style']);
                 }
 
@@ -267,6 +267,50 @@ class LayoutNode
             case 'height':
                 $instruction['name'] = 'height';
                 $instruction['value'] = preg_replace('/([a-z])/', '', $definition);
+                break;
+            case 'line-height':
+                $instruction['name'] = 'height';
+                $instruction['value'] = preg_replace('/([a-z])/', '', $definition);
+                break;
+            case 'left':
+                $instruction['name'] = 'x';
+                $position = $this->styleNode->getStyle('position');
+                if ($position == 'absolute') {
+                    $instruction['value'] = preg_replace('/([a-z])/', '', $definition);
+                    break;
+                }
+
+                // relative position
+                $inherits = $this->styleNode->getAncestorsByStyle('left');
+
+                $instruction['value'] = [];
+
+                foreach ($inherits as $inherit) {
+                    $instruction['value'][] = preg_replace('/([a-z])/', '', $inherit->getStyle('left'));
+                }
+
+                break;
+            case 'top':
+                $instruction['name'] = 'y';
+                $position = $this->styleNode->getStyle('position');
+                if ($position == 'absolute') {
+                    $instruction['value'] = preg_replace('/([a-z])/', '', $definition);
+                    break;
+                }
+
+                // relative position
+                $inherits = $this->styleNode->getAncestorsByStyle('top');
+
+                $instruction['value'] = [];
+
+                foreach ($inherits as $inherit) {
+                    $instruction['value'][] = preg_replace('/([a-z])/', '', $inherit->getStyle('top'));
+                }
+
+                break;
+            case 'display':
+                $instruction['name'] = 'lineBreak';
+                $instruction['value'] = ($definition == 'block');
                 break;
         }
 
