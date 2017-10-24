@@ -12,6 +12,25 @@
             "Fpdf\\": "fpdf/src/",
             "Fpdi\\": "fpdi/src/",
             "HyperPDF\\": "HyperPDF/src/"
-        }
+        },
+        "classmap": [
+            "tcpdf/config",
+            "tcpdf/include",
+            "tcpdf/tcpdf.php",
+            "tcpdf/tcpdf_parser.php",
+            "tcpdf/tcpdf_import.php",
+            "tcpdf/tcpdf_barcodes_1d.php",
+            "tcpdf/tcpdf_barcodes_2d.php",
+            "tcpdf/include/tcpdf_colors.php",
+            "tcpdf/include/tcpdf_filters.php",
+            "tcpdf/include/tcpdf_font_data.php",
+            "tcpdf/include/tcpdf_fonts.php",
+            "tcpdf/include/tcpdf_images.php",
+            "tcpdf/include/tcpdf_static.php",
+            "tcpdf/include/barcodes/datamatrix.php",
+            "tcpdf/include/barcodes/pdf417.php",
+            "tcpdf/include/barcodes/qrcode.php",
+            "tcpdf/tcpdi.php"
+        ]
     }
 }

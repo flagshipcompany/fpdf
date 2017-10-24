@@ -2,7 +2,7 @@
 
 namespace Fpdi;
 
-class ConcatPdf extends FPDI
+class ConcatPdf extends \TCPDI
 {
     public $files = [];
 
@@ -15,7 +15,7 @@ class ConcatPdf extends FPDI
     {
         foreach ($this->files as $file) {
             $pagecount = $this->setSourceFile($file);
-            for ($i = 1; $i <= $pagecount; $i++) {
+            for ($i = 1; $i <= $pagecount; ++$i) {
                 $tplidx = $this->ImportPage($i);
 
                 $sourceSize = $this->getTemplatesize($tplidx);
