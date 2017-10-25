@@ -9,6 +9,10 @@ class ConcatPdf extends \TCPDI
     public function setFiles($files)
     {
         $this->files = $files;
+
+        // https://stackoverflow.com/questions/10523472/fpdi-merge-pdf-files-strange-line-appears
+        $this->setPrintHeader(false);
+        $this->setPrintFooter(false);
     }
 
     public function concat($resizeMode = null)
